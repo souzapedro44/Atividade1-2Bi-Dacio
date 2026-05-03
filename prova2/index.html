@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>PROVA 2</title>
+
+
+    <style>
+    .card {
+        border: 2px solid #333;
+        padding: 20px;
+        width: 400px;
+        border-radius: 10px;
+    }
+
+    .conteudo {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    img {
+        width: 150px;
+        display: none; /* começa escondida */
+    }
+</style>
+</head>
+<body>
+    <section>
+        <h1>Grupos e Fatos</h1>
+    </section>
+    
+    <div class="card">
+        <h2>🅰️ Grupo A</h2>
+        <p><b>Seleções<b></p>
+
+        <ul>
+    <li>México</li>
+    <li>África do Sul</li>
+    <li>Coreia do Sul</li>
+    <li>República Tcheca</li>
+</ul>    
+
+     <p><b>Fatos:</b>O jogo de abertura será México x África do Sul. Confrontos entre Coreia do Sul e seleções europeias já<br> ocorreram em várias Copas, com histórico equilibrado. </p>
+</div>
+
+    <div class="card">
+     <h2>🅱️ Grupo B</h2>
+        <p><b>Seleções<b></p>
+
+        <ul>
+    <li>Canadá</li>
+    <li>Suiça</li>
+    <li>Catar</li>
+    <li>Vaga Europeia (Bósnia)</li>
+</ul>    
+
+     <p><b>Fatos:</b>O Canadá joga em casa, fator importante de desempenho. Catar e Suíça já se enfrentaram recentemente<br> em amistosos internacionais. </p>
+    </div>
+
+    <div class="card">
+     <h2>🅲 Grupo C</h2>
+        <p><b>Seleções<b></p>
+
+        <ul>
+    <li>Brasil</li>
+    <li>Marrocos</li>
+    <li>Haiti</li>
+    <li>Escócia</li>
+</ul>    
+
+     <p><b>Fatos:</b>Brasil, Marrocos e Escócia já dividiram grupo em 1998. Brasil nunca perdeu para a Escócia em Copas. </p>
+    </div>
+    
+    <button onclick="trocarConteudo()">Próximo</button>
+
+    <div class="card">
+
+    <div class="conteudo">
+        
+        <!-- FOTO (começa escondida) -->
+        <img id="foto" src="Lucas_Paqueta.webp" alt="Jogador">
+
+        <!-- INFORMAÇÕES -->
+        <div>
+            <p><strong>Nome:</strong> Lucas Tolentino Coelho de Lima</p>
+            <p><strong>Nascimento:</strong> 27/08/1997</p>
+            <p><strong>Altura:</strong> 1,80 m</p>
+            <p><strong>Posição:</strong> Meio-campista</p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <!-- BOTÃO -->
+    <button onclick="revelar()">Revelar</button>
+
+</div>
+
+<script>
+function revelar() {
+    const foto = document.getElementById("foto");
+    foto.style.display = "block";
+}
+</script>
+</body>
+</html>
