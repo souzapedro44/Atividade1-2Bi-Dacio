@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Média Escolar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .container {
+      width: 350px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: none;
+      margin-top: 5px;
+    }
+
+    #resultado {
+      margin-top: 15px;
+      padding: 15px;
+      font-size: 16px;
+      display: none;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Média Escolar</h1>
+
+    <input type="text" id="nome" placeholder="Nome do aluno">
+    <input type="number" id="nota1" placeholder="Nota 1" step="0.1">
+    <input type="number" id="nota2" placeholder="Nota 2" step="0.1">
+    <input type="number" id="nota3" placeholder="Nota 3" step="0.1">
+
+    <button onclick="calcularMedia()">Calcular</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function calcularMedia() {
+      let nome = document.getElementById("nome").value;
+      let nota1 = Number(document.getElementById("nota1").value);
+      let nota2 = Number(document.getElementById("nota2").value);
+      let nota3 = Number(document.getElementById("nota3").value);
+      let resultado = document.getElementById("resultado");
+
+      let media = (nota1 + nota2 + nota3) / 3;
+      resultado.style.display = "block";
+
+      let texto = `<strong>${nome}</strong><br>Média: ${media.toFixed(2)}<br>`;
+
+      if (media >= 7.0) {
+        resultado.style.backgroundColor = "#cce5ff";
+        resultado.style.color = "#004085";
+        resultado.style.border = "1px solid #004085";
+        texto += "Situação: <strong>Aprovado </strong>";
+      } else if (media >= 4.0) {
+        resultado.style.backgroundColor = "#d4edda";
+        resultado.style.color = "#155724";
+        resultado.style.border = "1px solid #155724";
+        let faltam = (10 - media).toFixed(2);
+        texto += `Situação: <strong>Exame </strong><br>Faltam ${faltam} pontos para 10`;
+      } else {
+        resultado.style.backgroundColor = "#f8d7da";
+        resultado.style.color = "#721c24";
+        resultado.style.border = "1px solid #721c24";
+        texto += "Situação: <strong>Reprovado </strong>";
+      }
+
+      resultado.innerHTML = texto;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Card Guard - Validador</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .container {
+      width: 420px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: none;
+    }
+
+    #painel {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background-color: #f5f5f5;
+      display: none;
+    }
+
+    #painel p {
+      margin: 6px 0;
+    }
+
+    .valido { color: green; font-weight: bold; }
+    .invalido { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Card Guard - Validador de Cartão</h1>
+
+    <input type="text" id="cartao" placeholder="Número do cartão (até 16 dígitos)" maxlength="19">
+    <button onclick="analisarCartao()">Analisar Cartão</button>
+
+    <div id="painel">
+      <p><strong>Painel de Info:</strong></p>
+      <p>Status: <span id="status"></span></p>
+      <p>Bandeira: <span id="bandeira"></span></p>
+      <p>Categoria de Setor: <span id="setor"></span></p>
+      <p>Banco Emissor: <span id="banco"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function algoritmoLuhn(numero) {
+      let soma = 0;
+      let invertido = numero.split("").reverse();
+
+      for (let i = 0; i < invertido.length; i++) {
+        let digito = parseInt(invertido[i]);
+
+        // Posições pares (0-index): 1, 3, 5... => posições 2, 4, 6 no cartão invertido
+        if (i % 2 === 1) {
+          digito *= 2;
+          if (digito > 9) digito -= 9;
+        }
+
+        soma += digito;
+      }
+
+      return soma % 10 === 0;
+    }
+
+    function identificarBandeira(numero) {
+      if (numero.startsWith("4")) return "Visa";
+      if (numero.startsWith("5")) return "Mastercard";
+      if (numero.startsWith("6")) return "Elo";
+      if (numero.startsWith("3")) return "Amex";
+      return "Desconhecida";
+    }
+
+    function identificarSetor(primeiroDigito) {
+      switch (primeiroDigito) {
+        case "1": case "2": return "Companhias Aéreas";
+        case "3": return "Viagens e Entretenimento";
+        case "4": case "5": return "Serviços Bancários e Financeiros";
+        case "6": return "Comércio e Varejo";
+        case "7": return "Petróleo e Combustível";
+        case "8": return "Saúde e Telecomunicações";
+        case "9": return "Governo e Outros";
+        default: return "Desconhecido";
+      }
+    }
+
+    function identificarBanco(numero) {
+      if (numero.startsWith("4111")) return "Banco do Brasil";
+      if (numero.startsWith("4539")) return "Itaú";
+      if (numero.startsWith("5412")) return "Bradesco";
+      if (numero.startsWith("5500")) return "Santander";
+      if (numero.startsWith("6011")) return "Caixa Econômica";
+      return "Banco não identificado";
+    }
+
+    function analisarCartao() {
+      let entrada = document.getElementById("cartao").value;
+      // Remove espaços e pontos
+      let numero = entrada.replace(/[\s.]/g, "");
+
+      let painel = document.getElementById("painel");
+      painel.style.display = "block";
+
+      if (numero.length < 13 || numero.length > 16 || !/^\d+$/.test(numero)) {
+        document.getElementById("status").textContent = "Inválido (tamanho incorreto)";
+        document.getElementById("status").className = "invalido";
+        document.getElementById("bandeira").textContent = "-";
+        document.getElementById("setor").textContent = "-";
+        document.getElementById("banco").textContent = "-";
+        return;
+      }
+
+      let valido = algoritmoLuhn(numero);
+      let statusEl = document.getElementById("status");
+
+      statusEl.textContent = valido ? "Válido ✅" : "Inválido ❌";
+      statusEl.className = valido ? "valido" : "invalido";
+
+      document.getElementById("bandeira").textContent = identificarBandeira(numero);
+      document.getElementById("setor").textContent = identificarSetor(numero[0]);
+      document.getElementById("banco").textContent = identificarBanco(numero);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Convidados VIP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .card {
+      width: 450px;
+      padding: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .topo {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .topo input {
+      flex: 1;
+      padding: 10px;
+      font-size: 15px;
+    }
+
+    .topo button {
+      padding: 10px 15px;
+      font-size: 15px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: none;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .nome-riscado {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btns button {
+      padding: 5px 10px;
+      cursor: pointer;
+      border: none;
+      font-size: 13px;
+    }
+
+    .btn-concluir { background-color: #5cb85c; color: white; }
+    .btn-editar   { background-color: #f0ad4e; color: white; }
+    .btn-excluir  { background-color: #d9534f; color: white; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Infinity Bank - Lista de Convidados VIP</h1>
+
+    <div class="topo">
+      <input type="text" id="inputNome" placeholder="Nome do convidado">
+      <button onclick="adicionarConvidado()">Adicionar</button>
+    </div>
+
+    <ul id="lista"></ul>
+  </div>
+
+  <script>
+    function adicionarConvidado() {
+      let input = document.getElementById("inputNome");
+      let nome = input.value.trim();
+
+      if (nome === "") return;
+
+      let lista = document.getElementById("lista");
+
+      let li = document.createElement("li");
+
+      let spanNome = document.createElement("span");
+      spanNome.textContent = nome;
+
+      let divBtns = document.createElement("div");
+      divBtns.className = "btns";
+
+      // Botão Concluir
+      let btnConcluir = document.createElement("button");
+      btnConcluir.textContent = "Concluir";
+      btnConcluir.className = "btn-concluir";
+      btnConcluir.onclick = function() {
+        spanNome.classList.toggle("nome-riscado");
+      };
+
+      // Botão Editar
+      let btnEditar = document.createElement("button");
+      btnEditar.textContent = "Editar";
+      btnEditar.className = "btn-editar";
+      btnEditar.onclick = function() {
+        let novoNome = prompt("Novo nome:", spanNome.textContent);
+        if (novoNome && novoNome.trim() !== "") {
+          spanNome.textContent = novoNome.trim();
+        }
+      };
+
+      // Botão Excluir
+      let btnExcluir = document.createElement("button");
+      btnExcluir.textContent = "Excluir";
+      btnExcluir.className = "btn-excluir";
+      btnExcluir.onclick = function() {
+        lista.removeChild(li);
+      };
+
+      divBtns.appendChild(btnConcluir);
+      divBtns.appendChild(btnEditar);
+      divBtns.appendChild(btnExcluir);
+
+      li.appendChild(spanNome);
+      li.appendChild(divBtns);
+      lista.appendChild(li);
+
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
